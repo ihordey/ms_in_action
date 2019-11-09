@@ -33,7 +33,7 @@ public class LicenseService {
     OrganizationDiscoveryClient organizationDiscoveryClient;
 
 
-    private Organization retrieveOrgInfo(String organizationId, String clientType){
+    private Organization retrieveOrgInfo(String organizationId, String clientType) {
         Organization organization = null;
 
         switch (clientType) {
@@ -56,36 +56,36 @@ public class LicenseService {
         return organization;
     }
 
-    public License getLicense(String organizationId,String licenseId, String clientType) {
+    public License getLicense(String organizationId, String licenseId, String clientType) {
         License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
 
         Organization org = retrieveOrgInfo(organizationId, clientType);
 
         return license
-                .withOrganizationName( org.getName())
-                .withContactName( org.getContactName())
-                .withContactEmail( org.getContactEmail() )
-                .withContactPhone( org.getContactPhone() )
+                .withOrganizationName(org.getName())
+                .withContactName(org.getContactName())
+                .withContactEmail(org.getContactEmail())
+                .withContactPhone(org.getContactPhone())
                 .withComment(config.getExampleProperty());
     }
 
-    public List<License> getLicensesByOrg(String organizationId){
-        return licenseRepository.findByOrganizationId( organizationId );
+    public List<License> getLicensesByOrg(String organizationId) {
+        return licenseRepository.findByOrganizationId(organizationId);
     }
 
-    public void saveLicense(License license){
-        license.withId( UUID.randomUUID().toString());
+    public void saveLicense(License license) {
+        license.withId(UUID.randomUUID().toString());
 
         licenseRepository.save(license);
 
     }
 
-    public void updateLicense(License license){
-      licenseRepository.save(license);
+    public void updateLicense(License license) {
+        licenseRepository.save(license);
     }
 
-    public void deleteLicense(License license){
-        licenseRepository.delete( license.getLicenseId());
+    public void deleteLicense(License license) {
+        licenseRepository.deleteById(license.getLicenseId());
     }
 
 }
