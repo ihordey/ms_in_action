@@ -94,7 +94,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <start-class>com.thoughtmechanix.licenses.Application</start-class>
+        <start-class>com.thoughtmechanix.licenses.LicensingApplication</start-class>
         <docker.image.name>johncarnell/tmx-licensing-service</docker.image.name>
         <docker.image.tag>chapter4</docker.image.tag>
     </properties>
