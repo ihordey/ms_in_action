@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCircuitBreaker
-public class Application {
+public class LicensingApplication {
     @LoadBalanced
     @Bean
     public RestTemplate restTemplate() {
@@ -19,6 +19,6 @@ public class Application {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(LicensingApplication.class, args);
     }
 }

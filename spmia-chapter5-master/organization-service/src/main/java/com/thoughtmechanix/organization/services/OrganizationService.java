@@ -2,6 +2,8 @@ package com.thoughtmechanix.organization.services;
 
 import com.thoughtmechanix.organization.model.Organization;
 import com.thoughtmechanix.organization.repository.OrganizationRepository;
+import jdk.jshell.spi.ExecutionControl;
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,21 +15,21 @@ public class OrganizationService {
     private OrganizationRepository orgRepository;
 
     public Organization getOrg(String organizationId) {
-        return orgRepository.findById(organizationId);
+        return orgRepository.findById(organizationId).orElseThrow(() -> new RuntimeException());
     }
 
-    public void saveOrg(Organization org){
-        org.setId( UUID.randomUUID().toString());
+    public void saveOrg(Organization org) {
+        org.setId(UUID.randomUUID().toString());
 
         orgRepository.save(org);
 
     }
 
-    public void updateOrg(Organization org){
+    public void updateOrg(Organization org) {
         orgRepository.save(org);
     }
 
-    public void deleteOrg(Organization org){
-        orgRepository.delete( org.getId());
+    public void deleteOrg(Organization org) {
+        orgRepository.deleteById(org.getId());
     }
 }
