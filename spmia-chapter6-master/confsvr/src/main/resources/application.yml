@@ -20,8 +20,8 @@ spring:
       server:
         encrypt.enabled: false
         git:
-          uri: https://github.com/carnellj/config-repo/
-          searchPaths: licensingservice,organizationservice,specialroutesservice,zuulservice
+          uri: https://github.com/ihordey/config-repo
+          searchPaths: licensingservice,organizationservice
           username: native-cloud-apps
           password: 0ffended
 

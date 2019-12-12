@@ -7,3 +7,12 @@ spring:
   cloud:
     config:
       enabled: true
+management:
+  endpoints:
+    routes:
+      enabled: true
+    filters:
+      enabled: true
+    web:
+      exposure:
+        include: "*"

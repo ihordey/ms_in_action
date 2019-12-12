@@ -1,3 +1,5 @@
+server:
+  port: 8886
 eureka:
   instance:
     preferIpAddress: true
@@ -6,6 +8,18 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+spring:
+  datasource:
+    initialization-mode: always
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
 #Setting logging levels
 logging:
