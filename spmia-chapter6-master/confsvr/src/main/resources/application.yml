@@ -21,7 +21,7 @@ spring:
         encrypt.enabled: false
         git:
           uri: https://github.com/ihordey/config-repo
-          searchPaths: licensingservice,organizationservice
+          searchPaths: licensingservice,organizationservice,specialroutesservice,authenticationservice
           username: native-cloud-apps
           password: 0ffended
 

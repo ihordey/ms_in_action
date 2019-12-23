@@ -16,24 +16,24 @@ public class AbTestingRouteService {
     public AbTestingRoute getRoute(String serviceName) {
         AbTestingRoute route = abTestingRouteRepository.findByServiceName(serviceName);
 
-        if (route==null){
+        if (route == null) {
             throw new NoRouteFound();
         }
 
         return route;
     }
 
-    public void saveAbTestingRoute(AbTestingRoute route){
+    public void saveAbTestingRoute(AbTestingRoute route) {
 
         abTestingRouteRepository.save(route);
 
     }
 
-    public void updateRouteAbTestingRoute(AbTestingRoute route){
+    public void updateRouteAbTestingRoute(AbTestingRoute route) {
         abTestingRouteRepository.save(route);
     }
 
-    public void deleteRoute(AbTestingRoute route){
-        abTestingRouteRepository.delete(route.getServiceName());
+    public void deleteRoute(AbTestingRoute route) {
+        abTestingRouteRepository.deleteById(route.getServiceName());
     }
 }
