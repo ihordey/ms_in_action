@@ -16,8 +16,9 @@ import java.util.Map;
 @RestController
 @EnableResourceServer
 @EnableAuthorizationServer
-public class Application {
-    @RequestMapping(value = { "/user" }, produces = "application/json")
+public class AuthenticationServiceApplication {
+
+    @RequestMapping(value = {"/user"}, produces = "application/json")
     public Map<String, Object> user(OAuth2Authentication user) {
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("user", user.getUserAuthentication().getPrincipal());
@@ -25,10 +26,7 @@ public class Application {
         return userInfo;
     }
 
-
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(AuthenticationServiceApplication.class, args);
     }
-
-
 }

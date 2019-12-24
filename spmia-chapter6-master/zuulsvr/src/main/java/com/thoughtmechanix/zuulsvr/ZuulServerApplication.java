@@ -22,7 +22,7 @@ public class ZuulServerApplication {
     public RestTemplate getRestTemplate(){
         RestTemplate template = new RestTemplate();
         List interceptors = template.getInterceptors();
-        if (interceptors == null) {
+        if (interceptors.isEmpty()) {
             template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
         } else {
             interceptors.add(new UserContextInterceptor());
