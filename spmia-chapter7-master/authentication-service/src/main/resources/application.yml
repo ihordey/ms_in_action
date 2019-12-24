@@ -27,5 +27,6 @@ spring:
             non_contextual_creation: true
 
 server:
-  contextPath:   /auth
   port: 8881
+  servlet:
+    context-path: /auth
