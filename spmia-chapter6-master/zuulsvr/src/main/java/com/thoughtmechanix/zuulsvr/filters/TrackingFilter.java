@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TrackingFilter extends ZuulFilter{
-    private static final int      FILTER_ORDER =  1;
-    private static final boolean  SHOULD_FILTER=true;
+public class TrackingFilter extends ZuulFilter {
+    private static final int FILTER_ORDER = 1;
+    private static final boolean SHOULD_FILTER = true;
     private static final Logger logger = LoggerFactory.getLogger(TrackingFilter.class);
 
     @Autowired
@@ -30,30 +30,29 @@ public class TrackingFilter extends ZuulFilter{
         return SHOULD_FILTER;
     }
 
-    private boolean isCorrelationIdPresent(){
-      if (filterUtils.getCorrelationId() !=null){
-          return true;
-      }
+    private boolean isCorrelationIdPresent() {
+        if (filterUtils.getCorrelationId() != null) {
+            return true;
+        }
 
-      return false;
+        return false;
     }
 
-    private String generateCorrelationId(){
+    private String generateCorrelationId() {
         return java.util.UUID.randomUUID().toString();
     }
 
     public Object run() {
 
         if (isCorrelationIdPresent()) {
-           logger.debug("tmx-correlation-id found in tracking filter: {}. ", filterUtils.getCorrelationId());
-        }
-        else{
+            logger.debug("tmx-correlation-id found in tracking filter: {}. ", filterUtils.getCorrelationId());
+        } else {
             filterUtils.setCorrelationId(generateCorrelationId());
             logger.debug("tmx-correlation-id generated in tracking filter: {}.", filterUtils.getCorrelationId());
         }
 
         RequestContext ctx = RequestContext.getCurrentContext();
-        logger.debug("Processing incoming request for {}.",  ctx.getRequest().getRequestURI());
+        logger.debug("Processing incoming request for {}.", ctx.getRequest().getRequestURI());
         return null;
     }
 }

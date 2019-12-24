@@ -23,15 +23,12 @@ import org.springframework.cloud.netflix.zuul.filters.ProxyRequestHelper;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -42,8 +39,8 @@ import java.util.Random;
 
 //@Component
 public class SpecialRoutesFilter extends ZuulFilter {
-    private static final int FILTER_ORDER =  1;
-    private static final boolean SHOULD_FILTER =true;
+    private static final int FILTER_ORDER = 1;
+    private static final boolean SHOULD_FILTER = true;
 
     @Autowired
     FilterUtils filterUtils;
@@ -68,22 +65,21 @@ public class SpecialRoutesFilter extends ZuulFilter {
 
     private ProxyRequestHelper helper = new ProxyRequestHelper();
 
-    private AbTestingRoute getAbRoutingInfo(String serviceName){
+    private AbTestingRoute getAbRoutingInfo(String serviceName) {
         ResponseEntity<AbTestingRoute> restExchange = null;
         try {
             restExchange = restTemplate.exchange(
-                             "http://specialroutesservice/v1/route/abtesting/{serviceName}",
-                             HttpMethod.GET,
-                             null, AbTestingRoute.class, serviceName);
-        }
-        catch(HttpClientErrorException ex){
-            if (ex.getStatusCode()== HttpStatus.NOT_FOUND) return null;
+                    "http://specialroutesservice/v1/route/abtesting/{serviceName}",
+                    HttpMethod.GET,
+                    null, AbTestingRoute.class, serviceName);
+        } catch (HttpClientErrorException ex) {
+            if (ex.getStatusCode() == HttpStatus.NOT_FOUND) return null;
             throw ex;
         }
         return restExchange.getBody();
     }
 
-    private String buildRouteString(String oldEndpoint, String newEndpoint, String serviceName){
+    private String buildRouteString(String oldEndpoint, String newEndpoint, String serviceName) {
         int index = oldEndpoint.indexOf(serviceName);
 
         String strippedRoute = oldEndpoint.substring(index + serviceName.length());
@@ -134,8 +130,7 @@ public class SpecialRoutesFilter extends ZuulFilter {
         InputStream requestEntity = null;
         try {
             requestEntity = request.getInputStream();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             // no requestBody is ok.
         }
         return requestEntity;
@@ -153,7 +148,7 @@ public class SpecialRoutesFilter extends ZuulFilter {
             throws Exception {
         Map<String, Object> info = this.helper.debug(verb, uri, headers, params,
                 requestEntity);
-        URL host = new URL( uri );
+        URL host = new URL(uri);
         HttpHost httpHost = getHttpHost(host);
 
         HttpRequest httpRequest;
@@ -173,7 +168,7 @@ public class SpecialRoutesFilter extends ZuulFilter {
                 httpPut.setEntity(entity);
                 break;
             case "PATCH":
-                HttpPatch httpPatch = new HttpPatch(uri );
+                HttpPatch httpPatch = new HttpPatch(uri);
                 httpRequest = httpPatch;
                 httpPatch.setEntity(entity);
                 break;
@@ -186,21 +181,19 @@ public class SpecialRoutesFilter extends ZuulFilter {
             HttpResponse zuulResponse = forwardRequest(httpclient, httpHost, httpRequest);
 
             return zuulResponse;
-        }
-        finally {
+        } finally {
         }
     }
 
 
-
-    public boolean useSpecialRoute(AbTestingRoute testRoute){
+    public boolean useSpecialRoute(AbTestingRoute testRoute) {
         Random random = new Random();
 
         if (testRoute.getActive().equals("N")) return false;
 
         int value = random.nextInt((10 - 1) + 1) + 1;
 
-        if (testRoute.getWeight()<value) return true;
+        if (testRoute.getWeight() < value) return true;
 
         return false;
     }
@@ -209,9 +202,9 @@ public class SpecialRoutesFilter extends ZuulFilter {
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
 
-        AbTestingRoute abTestRoute = getAbRoutingInfo( filterUtils.getServiceId() );
+        AbTestingRoute abTestRoute = getAbRoutingInfo(filterUtils.getServiceId());
 
-        if (abTestRoute!=null && useSpecialRoute(abTestRoute)) {
+        if (abTestRoute != null && useSpecialRoute(abTestRoute)) {
             String route = buildRouteString(ctx.getRequest().getRequestURI(),
                     abTestRoute.getEndpoint(),
                     ctx.get("serviceId").toString());
@@ -240,20 +233,18 @@ public class SpecialRoutesFilter extends ZuulFilter {
         HttpResponse response = null;
 
         try {
-            httpClient  = HttpClients.createDefault();
+            httpClient = HttpClients.createDefault();
             response = forward(httpClient, verb, route, request, headers,
                     params, requestEntity);
             setResponse(response);
-        }
-        catch (Exception ex ) {
+        } catch (Exception ex) {
             ex.printStackTrace();
 
-        }
-        finally{
+        } finally {
             try {
                 httpClient.close();
+            } catch (IOException ex) {
             }
-            catch(IOException ex){}
         }
     }
 }

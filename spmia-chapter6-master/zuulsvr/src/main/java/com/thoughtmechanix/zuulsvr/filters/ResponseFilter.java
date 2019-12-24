@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ResponseFilter extends ZuulFilter{
-    private static final int  FILTER_ORDER=1;
-    private static final boolean  SHOULD_FILTER=true;
+public class ResponseFilter extends ZuulFilter {
+    private static final int FILTER_ORDER = 1;
+    private static final boolean SHOULD_FILTER = true;
     private static final Logger logger = LoggerFactory.getLogger(ResponseFilter.class);
-    
+
     @Autowired
     FilterUtils filterUtils;
 
