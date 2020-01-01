@@ -3,7 +3,7 @@ server:
 security:
   oauth2:
     resource:
-       userInfoUri: http://localhost:8901/auth/user
+       userInfoUri: http://localhost:8881/auth/user
 spring:
   datasource:
     initialization-mode: always
