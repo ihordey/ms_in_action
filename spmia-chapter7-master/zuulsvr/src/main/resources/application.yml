@@ -39,3 +39,5 @@ eureka:
 #  routes:
 #    organizationservice: /organization/**
 #    licensingservice: /licensing/**
+zuul:
+  sensitive-headers: Cookie,Set-Cookie

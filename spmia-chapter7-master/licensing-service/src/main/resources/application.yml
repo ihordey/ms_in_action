@@ -1,8 +1,24 @@
-
+server:
+  port: 8885
 security:
   oauth2:
    resource:
       userInfoUri: http://localhost:8901/auth/user
+   client:
+     grant-type: client_credentials
+
+spring:
+  datasource:
+    initialization-mode: always
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
 eureka:
   instance:
