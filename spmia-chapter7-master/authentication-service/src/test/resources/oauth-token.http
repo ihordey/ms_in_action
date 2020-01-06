@@ -1,0 +1,8 @@
+POST http://localhost:8881/auth/oauth/token?grant_type=password&scope=webclient&username=william.woodward&password=password2
+Accept: */*
+Cache-Control: no-cache
+Authorization1: Basic ZWFnbGVleWU6dGhpc2lzc2VjcmV0
+Authorization: Basic ZWFnbGVleWU6dGhpc2lzc2VjcmV0
+
+###
+
