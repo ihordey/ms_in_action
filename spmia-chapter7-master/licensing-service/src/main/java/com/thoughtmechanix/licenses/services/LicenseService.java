@@ -77,7 +77,6 @@ public class LicenseService {
     )
     public List<License> getLicensesByOrg(String organizationId){
         randomlyRunLong();
-
         return licenseRepository.findByOrganizationId(organizationId);
     }
 
@@ -94,7 +93,6 @@ public class LicenseService {
 
     public void saveLicense(License license){
         license.withId( UUID.randomUUID().toString());
-
         licenseRepository.save(license);
     }
 

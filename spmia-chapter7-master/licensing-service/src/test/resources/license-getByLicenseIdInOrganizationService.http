@@ -1,0 +1,10 @@
+GET http://localhost:5555/api/licensingservice/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/f3831f8c-c338-4ebe-a82a-e2fc1d1ff78a
+Accept: */*
+Cache-Control: no-cache
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmdhbml6YXRpb25JZCI6IjQyZDNkNGY1LTlmMzMtNDJmNC04YWNhLWI3NTE5ZDZhZjFiYiIsInVzZXJfbmFtZSI6IndpbGxpYW0ud29vZHdhcmQiLCJzY29wZSI6WyJ3ZWJjbGllbnQiXSwiZXhwIjoxNTc4NTA5MzE4LCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sImp0aSI6IjVhNWQ5MjUzLTI3NGItNGNlZS05N2IxLWU0MjJjNDY4ODE2MSIsImNsaWVudF9pZCI6ImVhZ2xlZXllIn0.ogUwBChbaaHBX7OhwgKTk44dOCUUwACs3gWJX-V3f6I
+
+<> 2020-01-08T100043.200.json
+<> 2020-01-08T100037.200.json
+
+###
+
