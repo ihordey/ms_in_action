@@ -17,24 +17,23 @@ public class OrganizationService {
     SimpleSourceBean simpleSourceBean;
 
     public Organization getOrg(String organizationId) {
-        return orgRepository.findById(organizationId);
+        return orgRepository.findById(organizationId).orElse(null);
     }
 
-    public void saveOrg(Organization org){
-        org.setId( UUID.randomUUID().toString());
-
+    public void saveOrg(Organization org) {
+        org.setId(UUID.randomUUID().toString());
         orgRepository.save(org);
         simpleSourceBean.publishOrgChange("SAVE", org.getId());
     }
 
-    public void updateOrg(Organization org){
+    public void updateOrg(Organization org) {
         orgRepository.save(org);
         simpleSourceBean.publishOrgChange("UPDATE", org.getId());
 
     }
 
-    public void deleteOrg(String  orgId){
-        orgRepository.delete( orgId );
+    public void deleteOrg(String orgId) {
+        orgRepository.deleteById(orgId);
         simpleSourceBean.publishOrgChange("DELETE", orgId);
     }
 }

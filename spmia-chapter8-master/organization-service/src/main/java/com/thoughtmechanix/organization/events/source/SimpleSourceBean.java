@@ -17,18 +17,17 @@ public class SimpleSourceBean {
     private static final Logger logger = LoggerFactory.getLogger(SimpleSourceBean.class);
 
     @Autowired
-    public SimpleSourceBean(Source source){
+    public SimpleSourceBean(Source source) {
         this.source = source;
     }
 
-    public void publishOrgChange(String action,String orgId){
-       logger.debug("Sending Kafka message {} for Organization Id: {}", action, orgId);
-        OrganizationChangeModel change =  new OrganizationChangeModel(
+    public void publishOrgChange(String action, String orgId) {
+        logger.debug("Sending Kafka message {} for Organization Id: {}", action, orgId);
+        OrganizationChangeModel change = new OrganizationChangeModel(
                 OrganizationChangeModel.class.getTypeName(),
                 action,
                 orgId,
                 UserContext.getCorrelationId());
-
         source.output().send(MessageBuilder.withPayload(change).build());
     }
 }

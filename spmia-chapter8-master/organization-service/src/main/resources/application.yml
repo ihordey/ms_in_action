@@ -1,14 +1,27 @@
+server:
+  port: 8887
 spring:
   cloud:
     stream:
       bindings:
         output:
-            destination:  orgChangeTopic
-            content-type: application/json
+          destination:  orgChangeTopic
+          content-type: application/json
       kafka:
         binder:
           zkNodes: localhost
           brokers: localhost
+  datasource:
+    initialization-mode: always
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
 #Setting the logging levels for the service
 logging:
@@ -25,6 +38,6 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:
-        defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
         
