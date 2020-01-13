@@ -14,32 +14,24 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
-import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.integration.annotation.InboundChannelAdapter;
-import org.springframework.integration.annotation.Poller;
-import org.springframework.integration.core.MessageSource;
-import org.springframework.messaging.support.GenericMessage;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.client.RestTemplate;
-import java.text.SimpleDateFormat;
+
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCircuitBreaker
 @EnableBinding(Sink.class)
-public class Application {
+public class LicensingApplication {
 
     @Autowired
     private ServiceConfig serviceConfig;
 
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    private static final Logger logger = LoggerFactory.getLogger(LicensingApplication.class);
 
     @LoadBalanced
     @Bean
@@ -71,12 +63,12 @@ public class Application {
         return template;
     }
 
-//    @StreamListener(Sink.INPUT)
-//    public void loggerSink(OrganizationChangeModel orgChange) {
-//        logger.debug("Received an event for organization id {}", orgChange.getOrganizationId());
-//    }
+    @StreamListener(Sink.INPUT)
+    public void loggerSink(OrganizationChangeModel orgChange) {
+        logger.debug("Received an event for organization id {}", orgChange.getOrganizationId());
+    }
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(LicensingApplication.class, args);
     }
 }
