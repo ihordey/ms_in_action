@@ -13,13 +13,12 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class OrganizationRestTemplateClient {
+    private static final Logger logger = LoggerFactory.getLogger(OrganizationRestTemplateClient.class);
     @Autowired
     RestTemplate restTemplate;
 
     @Autowired
     OrganizationRedisRepository orgRedisRepo;
-
-    private static final Logger logger = LoggerFactory.getLogger(OrganizationRestTemplateClient.class);
 
     private Organization checkRedisCache(String organizationId) {
         try {
@@ -34,17 +33,17 @@ public class OrganizationRestTemplateClient {
     private void cacheOrganizationObject(Organization org) {
         try {
             orgRedisRepo.saveOrganization(org);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("Unable to cache organization {} in Redis. Exception {}", org.getId(), ex);
         }
     }
 
-    public Organization getOrganization(String organizationId){
+    public Organization getOrganization(String organizationId) {
         logger.debug("In Licensing Service.getOrganization: {}", UserContext.getCorrelationId());
 
         Organization org = checkRedisCache(organizationId);
 
-        if (org!=null){
+        if (org != null) {
             logger.debug("I have successfully retrieved an organization {} from the redis cache: {}", organizationId, org);
             return org;
         }
@@ -60,7 +59,7 @@ public class OrganizationRestTemplateClient {
         /*Save the record from cache*/
         org = restExchange.getBody();
 
-        if (org!=null) {
+        if (org != null) {
             cacheOrganizationObject(org);
         }
 

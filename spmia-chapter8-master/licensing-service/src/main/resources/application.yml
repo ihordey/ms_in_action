@@ -24,7 +24,7 @@ spring:
           lob:
             non_contextual_creation: true
 
-#        input:
+#        input:Сфіещ
 #          destination: orgChangeTopic
 #          content-type: application/json
 #          group: licensingGroup

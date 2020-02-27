@@ -1,9 +1,15 @@
-GET http://localhost:5555/api/organizationservice/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff7811
+POST http://localhost:5555/api/organizationservice/v1/organizations/11
 Accept: */*
 Cache-Control: no-cache
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmdhbml6YXRpb25JZCI6IjQyZDNkNGY1LTlmMzMtNDJmNC04YWNhLWI3NTE5ZDZhZjFiYiIsInVzZXJfbmFtZSI6IndpbGxpYW0ud29vZHdhcmQiLCJzY29wZSI6WyJ3ZWJjbGllbnQiXSwiZXhwIjoxNTc4NTA5MzE4LCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sImp0aSI6IjVhNWQ5MjUzLTI3NGItNGNlZS05N2IxLWU0MjJjNDY4ODE2MSIsImNsaWVudF9pZCI6ImVhZ2xlZXllIn0.ogUwBChbaaHBX7OhwgKTk44dOCUUwACs3gWJX-V3f6I
+Content-Type: application/json
 
-<> 2020-01-08T085339.200.json
+{
+  "name": "ivana-company",
+  "contactName": "Ivan Hordey 2",
+  "contactEmail": "ihordey@gmail.com",
+  "contactPhone": "044 347 85 25_2"
+}
 
 ###
 
