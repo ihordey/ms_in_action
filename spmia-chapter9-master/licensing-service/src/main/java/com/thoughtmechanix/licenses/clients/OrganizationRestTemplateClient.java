@@ -1,14 +1,12 @@
 package com.thoughtmechanix.licenses.clients;
 
+import brave.Span;
+import brave.Tracer;
 import com.thoughtmechanix.licenses.model.Organization;
 import com.thoughtmechanix.licenses.repository.OrganizationRedisRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.cloud.sleuth.Span;
-import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -28,34 +26,32 @@ public class OrganizationRestTemplateClient {
     private static final Logger logger = LoggerFactory.getLogger(OrganizationRestTemplateClient.class);
 
     private Organization checkRedisCache(String organizationId) {
-       Span newSpan = tracer.createSpan("readLicensingDataFromRedis");
-        try {
+        Span newSpan = tracer.nextSpan().name("readLicensingDataFromRedis");
+        try (Tracer.SpanInScope ws = this.tracer.withSpanInScope(newSpan.start())) {
             return orgRedisRepo.findOrganization(organizationId);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("Error encountered while trying to retrieve organization {} check Redis Cache.  Exception {}", organizationId, ex);
             return null;
-        }
-        finally {
-          newSpan.tag("peer.service", "redis");
-          newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
-          tracer.close(newSpan);
+        } finally {
+            newSpan.tag("peer.service", "redis");
+//          newSpan.logEvent(org.springframework.cloud.sleuth.Span.CLIENT_RECV);
+            newSpan.finish();
         }
     }
 
     private void cacheOrganizationObject(Organization org) {
         try {
             orgRedisRepo.saveOrganization(org);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             logger.error("Unable to cache organization {} in Redis. Exception {}", org.getId(), ex);
         }
     }
 
-    public Organization getOrganization(String organizationId){
+    public Organization getOrganization(String organizationId) {
 
         Organization org = checkRedisCache(organizationId);
 
-        if (org!=null){
+        if (org != null) {
             logger.debug("I have successfully retrieved an organization {} from the redis cache: {}", organizationId, org);
             return org;
         }
@@ -71,7 +67,7 @@ public class OrganizationRestTemplateClient {
         /*Save the record from cache*/
         org = restExchange.getBody();
 
-        if (org!=null) {
+        if (org != null) {
             cacheOrganizationObject(org);
         }
 

@@ -1,0 +1,26 @@
+version: '2'
+services:
+  database:
+    image: postgres:12.2
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=newbalance
+      - POSTGRES_DB=eagle_eye_local
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+
+#  This is the openzipkin server.
+  # zipkin:
+  #   image: openzipkin/zipkin
+  #   ports:
+  #     - 9411:9411
+  #Attention:  Replace the value in the “command” attribute with the value supplied to you from Papertrail
+#  logspout:
+#    image: gliderlabs/logspout
+#    command: syslog://logs5.papertrailapp.com:51601
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock

@@ -15,6 +15,17 @@ spring:
           binder:
             zkNodes: localhost
             brokers: localhost
+  datasource:
+    initialization-mode: always
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
 #Setting the logging levels for the service
 logging:

@@ -1,5 +1,6 @@
 package com.thoughtmechanix.licenses;
 
+import brave.sampler.Sampler;
 import com.thoughtmechanix.licenses.config.ServiceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.sleuth.Sampler;
-import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
@@ -22,12 +21,12 @@ import org.springframework.web.client.RestTemplate;
 @EnableEurekaClient
 @EnableCircuitBreaker
 @EnableBinding(Sink.class)
-public class Application {
+public class LicensingApplication {
 
     @Autowired
     private ServiceConfig serviceConfig;
 
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    private static final Logger logger = LoggerFactory.getLogger(LicensingApplication.class);
 
     @LoadBalanced
     @Bean
@@ -37,10 +36,10 @@ public class Application {
         return template;
     }
 
-    @Bean
+/*    @Bean
     public Sampler defaultSampler() {
         return new AlwaysSampler();
-    }
+    }*/
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
@@ -63,6 +62,6 @@ public class Application {
 //    }
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(LicensingApplication.class, args);
     }
 }

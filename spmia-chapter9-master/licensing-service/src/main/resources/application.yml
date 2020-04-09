@@ -1,3 +1,5 @@
+server:
+  port: 8886
 spring:
 #    sleuth:
 #      sampler:
@@ -11,9 +13,21 @@ spring:
           destination: orgChangeTopic
           content-type: application/json
           group: licensingGroup
-        binder:
-          zkNodes: localhost
-          brokers: localhost
+        kafka:
+          binder:
+            zkNodes: localhost
+            brokers: localhost
+  datasource:
+    initialization-mode: always
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
 
 
 #        input:

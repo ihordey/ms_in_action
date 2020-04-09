@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
 
 
 @EnableBinding(CustomChannels.class)
@@ -22,7 +21,7 @@ public class OrganizationChangeHandler {
     @StreamListener("inboundOrgChanges")
     public void loggerSink(OrganizationChangeModel orgChange) {
         logger.debug("Received a message of type " + orgChange.getType());
-        switch(orgChange.getAction()){
+        switch (orgChange.getAction()) {
             case "GET":
                 logger.debug("Received a GET event from the organization service for organization id {}", orgChange.getOrganizationId());
                 break;
