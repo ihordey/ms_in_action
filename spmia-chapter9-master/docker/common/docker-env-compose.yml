@@ -16,25 +16,29 @@ services:
     image: openzipkin/zipkin:2.21.0
     ports:
       - 9411:9411
-  es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
-    container_name: es01
+      - 9410:9410
     environment:
-      - node.name=es01
-      - cluster.name=es-docker-cluster
-      - cluster.initial_master_nodes=es01
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - data01:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-    networks:
-      - elastic
+      - SCRIBE_ENABLED=true
+      - JAVA_OPTS=-Dlogging.level.zipkin2=TRACE
+#  es01:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+#    container_name: es01
+#    environment:
+#      - node.name=es01
+#      - cluster.name=es-docker-cluster
+#      - cluster.initial_master_nodes=es01
+#      - bootstrap.memory_lock=true
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    volumes:
+#      - data01:/usr/share/elasticsearch/data
+#    ports:
+#      - 9200:9200
+#    networks:
+#      - elastic
 #  es01:
 #    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
 #    container_name: es01
@@ -99,17 +103,17 @@ services:
   #     - 9411:9411
   #Attention:  Replace the value in the “command” attribute with the value supplied to you from Papertrail
 
-volumes:
-  data01:
-    driver: local
+#volumes:
+#  data01:
+#    driver: local
 #  data02:
 #    driver: local
 #  data03:
 #    driver: local
 
-networks:
-  elastic:
-    driver: bridge
+#networks:
+#  elastic:
+#    driver: bridge
 #  logspout:
 #    image: gliderlabs/logspout
 #    command: syslog://logs5.papertrailapp.com:51601

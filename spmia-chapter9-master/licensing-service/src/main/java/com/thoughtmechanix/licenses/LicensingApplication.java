@@ -36,10 +36,10 @@ public class LicensingApplication {
         return template;
     }
 
-/*    @Bean
+    @Bean
     public Sampler defaultSampler() {
-        return new AlwaysSampler();
-    }*/
+        return Sampler.ALWAYS_SAMPLE;
+    }
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {

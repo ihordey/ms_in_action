@@ -1,7 +1,6 @@
 package com.thoughtmechanix.zuulsvr;
 
 
-import brave.sampler.RateLimitingSampler;
 import brave.sampler.Sampler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,9 +22,7 @@ public class ZuulServerApplication {
 
     @Bean
     public Sampler defaultSampler() {
-        // TODO sleuth
-//        return new AlwaysSampler();
-        return RateLimitingSampler.create(10);
+        return Sampler.ALWAYS_SAMPLE;
     }
 
     public static void main(String[] args) {
